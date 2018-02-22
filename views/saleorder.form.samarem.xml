@@ -10,8 +10,9 @@
           <field name="Remise"/>
         </xpath>
         <xpath expr="//field[@name='amount_tax']" position="before">
-          <field name="RemiseCalculated" readonly="1"/>
+          <field name="RemiseCalculated" widget="monetary" readonly="1"/>
         </xpath>
+         
 			</field>
 		</record>
 	</data>
