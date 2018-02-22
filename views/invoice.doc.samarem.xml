@@ -4,7 +4,7 @@
     <data>
         <!-- Héritage de la vue "sale.report_saleorder_document" -->
         <template id="samarem_report_invoice_document_inherit" inherit_id="sale.report_saleorder_document">
-            <xpath expr="//table[2]/tr[1]" position="after">
+            <xpath expr="//div[@class='clearfix']/div[@class='row']/div[1]/table[1]/tr[1]" position="after">
                 <tr style="border-bottom:1px solid #dddddd;">
                     <td><span>Remise</span></td>
                     <td class="text-right">
