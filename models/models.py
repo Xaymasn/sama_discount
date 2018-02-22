@@ -12,7 +12,7 @@ class remiseglobale(models.Model):
     """
     @api.depends('Remise')
     def _calcul_remise(self):
-        if Remise > 0:
+        if self.Remise > 0:
             self.RemiseCalculated = -1 * self.Remise
         else :
             self.RemiseCalculated = self.Remise
@@ -28,7 +28,7 @@ class remiseglobale(models.Model):
                  'currency_id', 'company_id', 'date_invoice', 'type', 'RemiseCalculated')
     def _compute_amount(self):
         round_curr = self.currency_id.round
-        self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line_ids) + RemiseCalculated
+        self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line_ids) + self.RemiseCalculated
         self.amount_tax = sum(round_curr(line.amount_total) for line in self.tax_line_ids)
         self.amount_total = self.amount_untaxed + self.amount_tax
         amount_total_company_signed = self.amount_total
