@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ce template gère la mise en forme des rapports PDF (Factures, devis, duplicata proforma, etc.) -->
+<odoo>
+    <data>
+        <!-- Héritage de la vue "sale.report_saleorder_document" -->
+        <template id="samarem_report_invoice_document_inherit" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//*[@id='wrapwrap']/main/div[2]/div/div[4]/div/div/table/tbody/tr[2]" position="before">
+                <tr style="border-bottom:1px solid #dddddd;">
+                    <td><span>Remise</span></td>
+                    <td class="text-right">
+                        <span t-field="doc.RemiseCalculated"/>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+  </data>
+</odoo>
