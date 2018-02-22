@@ -13,7 +13,7 @@ class remiseglobale(models.Model):
     @api.depends('Remise')
     def _calcul_remise(self):
         if Remise > 0:
-            self.RemiseCalculated = -1 * Remise
+            self.RemiseCalculated = -1 * self.Remise
         else :
             self.RemiseCalculated = Remise
 
