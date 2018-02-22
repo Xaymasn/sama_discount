@@ -15,7 +15,7 @@ class remiseglobale(models.Model):
         if Remise > 0:
             self.RemiseCalculated = -1 * self.Remise
         else :
-            self.RemiseCalculated = Remise
+            self.RemiseCalculated = self.Remise
 
     """
     Calcule les Sous-Totaux de la commande.
