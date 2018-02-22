@@ -2,14 +2,20 @@
 
 from odoo import models, fields, api
 
-# class remiseglobale(models.Model):
-#     _name = 'remiseglobale.remiseglobale'
+class remiseglobale(models.Model):
+    _inherit = 'sale.order'
+    Remise = fields.Monetary( default='0', string='Remise', )
+    RemiseCalculated = fields.Monetary(compute='_calcul_remise')
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         self.value2 = float(self.value) / 100
+    @api.depends('Remise')
+    def _calcul_remise(self):
+        self.RemiseCalculated = -1 * Remise
+
+    """
+    Calcule le Total de la commande.
+    _compute_amount_total() est une fonction de Odoo qu'on override, ici.
+    """
+    @api.depends('amount', 'amount_rounding', 'RemiseCalculated')
+    def _compute_amount_total(self):
+        for tax_line in self:
+            tax_line.amount_total = tax_line.amount + tax_line.amount_rounding + tax_line.RemiseCalculated
