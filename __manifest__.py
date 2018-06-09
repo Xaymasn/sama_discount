@@ -1,34 +1,18 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Sama Remise Globale",
-
-    'summary': """
-        Remise globale""",
-
+    'name': "Sama Discount",
+    'summary': """Remise dans les rapports""",
     'description': """
         Permet d'ajouter une remise globale sur le devis ou la facture
     """,
-
-    'author': "Elhadji Malang Diedhiou",
-    'website': "http://www.supermalang.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/master/odoo/addons/base/module/module_data.xml
-    # for the full list
+    'author': "Xayma Solutions",
+    'website': "http://www.xayma-solutions.com",
     'category': 'Sales Management',
-    'version': '11.0',
-
-    # any module necessary for this one to work correctly
+    'version': '11.0.0.1',
     'depends': ['base','sale_management'],
-
-    # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'views/saleorder.form.samarem.xml',
         'views/invoice.doc.samarem.xml',
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        '',
-    ],
+    'demo': [],
 }
