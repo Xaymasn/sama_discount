@@ -2,17 +2,29 @@
 	<data>
 		<!-- Form View -->
 		<record model="ir.ui.view" id="samarem_saleorder_form">
-			<field name="name">samarem.saleorder.form</field>
+			<field name="name">samadiscount.saleorder.form</field>
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form" />
 			<field name="arch" type="xml">
-        <xpath expr="//field[@name='note']" position="before">
-          <field name="Remise"/>
-        </xpath>
-        <xpath expr="//field[@name='amount_tax']" position="before">
-          <field name="RemiseCalculated" widget="monetary" readonly="1"/>
-        </xpath>
-         
+				 <xpath expr="//group[@name='sale_total']" position="replace">
+                    <group col="4">
+                        <group name="discount" colspan="2">
+                            <field name="discount_type"/>
+                            <field name="discount_rate"/>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            <div class="oe_subtotal_footer_separator oe_inline">
+                                <label for="amount_total" />
+                                <button name="button_dummy"
+                                        states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                            </div>
+                            <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+				</xpath>
 			</field>
 		</record>
 	</data>
