@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
                 'amount_untaxed': order.pricelist_id.currency_id.round(amount_untaxed),
                 'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
                 'amount_discount': order.pricelist_id.currency_id.round(amount_discount),
-                'amount_discount_negative': order.pricelist_id.currency_id.round(amount_discount),
+                'amount_discount_negative': order.pricelist_id.currency_id.round(amount_discount_negative),
                 'amount_total': amount_untaxed + amount_tax,
             })
     # Le type de remise
@@ -44,7 +44,7 @@ class SaleOrder(models.Model):
     # Montant de la remise
     amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
     # Montant négatif de la remise
-    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all',
+    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
     
 
     @api.onchange('discount_type', 'discount_rate', 'order_line')
