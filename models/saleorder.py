@@ -25,6 +25,7 @@ class SaleOrder(models.Model):
                 'amount_discount': order.pricelist_id.currency_id.round(amount_discount),
                 'amount_discount_negative': order.pricelist_id.currency_id.round(amount_discount_negative),
                 'amount_total': amount_untaxed + amount_tax,
+                'amount_without_discount': amount_untaxed + amount_discount,
             })
     # Le type de remise
     discount_type = fields.Selection(
@@ -43,10 +44,12 @@ class SaleOrder(models.Model):
     amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all', track_visibility='always')
     # Montant de la remise
     amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
-    # Montant négatif de la remise
+    # Montant négatif de la remise (juste utilisé à des fins d'affichage)
     amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
+    # Montant sans rabais (coût initial avant rabais)
+    amount_without_discount = fields.Monetary(string='Coût initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
     
-
+    # Si un des champs définis est mis à jour, on met à jour le taux de rabais
     @api.onchange('discount_type', 'discount_rate', 'order_line')
     def supply_rate(self):
         for order in self:
