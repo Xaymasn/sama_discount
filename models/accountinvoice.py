@@ -14,9 +14,9 @@ class AccountInvoice(models.Model):
     # Montant de la remise
     amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', track_visibility='always')
     # Montant négatif de la remise (juste utilisé à des fins d'affichage)
-    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
+    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', digits=dp.get_precision('Account'), track_visibility='always')
     # Montant sans rabais (coût initial avant rabais)
-    amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
+    amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_compute_amount', digits=dp.get_precision('Account'), track_visibility='always')
 
     @api.one
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount', 'tax_line_ids.amount_rounding', 'currency_id', 'company_id', 'date_invoice', 'type')
