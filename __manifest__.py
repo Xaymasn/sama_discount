@@ -12,7 +12,7 @@
     'depends': ['base','sale_management'],
     'data': [
         'views/saleorder.form.samarem.xml',
-        'views/invoice.form.samarem.xml',
+        'views/accountinvoice.form.samarem.xml',
     ],
     'demo': [],
 }

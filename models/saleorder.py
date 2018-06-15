@@ -35,7 +35,7 @@ class SaleOrder(models.Model):
             states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, default='percent'
         )
     # Le taux de remise
-    discount_rate = fields.Float('Taux de remise', digits=dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
+    discount_rate = fields.Float('Remise', digits=dp.get_precision('Account'), readonly=True, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]})
     # Montant sans taxe
     amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all', track_visibility='always')
     # Montant total des taxes
@@ -47,7 +47,7 @@ class SaleOrder(models.Model):
     # Montant négatif de la remise (juste utilisé à des fins d'affichage)
     amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
     # Montant sans rabais (coût initial avant rabais)
-    amount_without_discount = fields.Monetary(string='Coût initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
+    amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
     
     # Si un des champs définis est mis à jour, on met à jour le taux de rabais
     @api.onchange('discount_type', 'discount_rate', 'order_line')
