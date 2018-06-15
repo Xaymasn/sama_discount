@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
+import odoo.addons.decimal_precision as dp
 
 # Modification du modèle des factures
 class AccountInvoice(models.Model):
     _inherit = "account.invoice"
+
+    # Le type de remise
+    discount_type = fields.Selection([('percent', 'Pourcentage'), ('amount', 'Montant fixe')], string='Type de remise', readonly=True, states={'draft': [('readonly', False)]}, default='percent')
+    # Le taux de remise
+    discount_rate = fields.Float('Remise', digits=(16, 2), readonly=True, states={'draft': [('readonly', False)]})
+    # Montant de la remise
+    amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', track_visibility='always')
+    # Montant négatif de la remise (juste utilisé à des fins d'affichage)
+    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
+    # Montant sans rabais (coût initial avant rabais)
+    amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
 
     @api.one
     @api.depends('invoice_line_ids.price_subtotal', 'tax_line_ids.amount', 'tax_line_ids.amount_rounding', 'currency_id', 'company_id', 'date_invoice', 'type')
@@ -25,17 +37,6 @@ class AccountInvoice(models.Model):
         self.amount_untaxed_signed = amount_untaxed_signed * sign
         self.amount_discount_negative = (-1)*amount_discount
         self.amount_without_discount = amount_untaxed + amount_discount
-
-    # Le type de remise
-    discount_type = fields.Selection([('percent', 'Pourcentage'), ('amount', 'Montant fixe')], string='Type de remise', readonly=True, states={'draft': [('readonly', False)]}, default='percent')
-    # Le taux de remise
-    discount_rate = fields.Float('Remise', digits=(16, 2), readonly=True, states={'draft': [('readonly', False)]})
-    # Montant de la remise
-    amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', track_visibility='always')
-    # Montant négatif de la remise (juste utilisé à des fins d'affichage)
-    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
-    # Montant sans rabais (coût initial avant rabais)
-    amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_amount_all', digits=dp.get_precision('Account'), track_visibility='always')
 
     @api.onchange('discount_type', 'discount_rate', 'invoice_line_ids')
     def supply_rate(self):
