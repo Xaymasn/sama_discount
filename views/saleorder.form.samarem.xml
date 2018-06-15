@@ -1,7 +1,7 @@
 <odoo>
 	<data>
 		<!-- Form View -->
-		<record model="ir.ui.view" id="samarem_saleorder_form">
+		<record model="ir.ui.view" id="samadiscount_saleorder_form">
 			<field name="name">samadiscount.saleorder.form</field>
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form" />
