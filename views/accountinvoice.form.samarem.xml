@@ -12,7 +12,7 @@
                 </xpath!-->
                 <xpath expr="//field[@name='comment']" position="before">
                     <group name="discount" colspan="2">
-                        <field name="discount_type"/>
+                        <!--field name="discount_type"/>
                         <!--field name="discount_rate"/-->
                     </group>
                 </xpath>
