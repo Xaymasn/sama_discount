@@ -6,10 +6,10 @@
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='amount_untaxed']" position="before">
+                <!--xpath expr="//field[@name='amount_untaxed']" position="before">
                     <field name="amount_without_discount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                     <field name="amount_discount_negative" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                </xpath>
+                </xpath!-->
                 <xpath expr="//field[@name='comment']" position="before">
                     <group name="discount" colspan="2">
                         <field name="discount_type"/>
