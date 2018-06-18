@@ -14,7 +14,7 @@ class AccountInvoice(models.Model):
     # Montant de la remise
     amount_discount = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', track_visibility='always')
     # Montant négatif de la remise (juste utilisé à des fins d'affichage)
-    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', track_visibility='always')
+    amount_discount_negative = fields.Monetary(string='Remise', store=True, readonly=True, compute='_compute_amount', digits=dp.get_precision('Account'), track_visibility='always')
     # Montant sans rabais (coût initial avant rabais)
     amount_without_discount = fields.Monetary(string='Montant initial', store=True, readonly=True, compute='_compute_amount', digits=dp.get_precision('Account'), track_visibility='always')
 
@@ -45,8 +45,8 @@ class AccountInvoice(models.Model):
         sign = self.type in ['in_refund', 'out_refund'] and -1 or 1
         self.amount_total_company_signed = amount_total_company_signed * sign
         self.amount_total_signed = self.amount_total * sign
-        self.amount_untaxed_signed = amount_untaxed_signed * sign~
-
+        self.amount_untaxed_signed = amount_untaxed_signed * sign
+        
         self.amount_discount_negative = (-1)*self.amount_discount
         self.amount_without_discount = self.amount_untaxed + self.amount_discount
 
