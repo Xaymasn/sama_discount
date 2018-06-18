@@ -35,8 +35,8 @@ class AccountInvoice(models.Model):
         self.amount_total_company_signed = amount_total_company_signed * sign
         self.amount_total_signed = self.amount_total * sign
         self.amount_untaxed_signed = amount_untaxed_signed * sign
-        self.amount_discount_negative = (-1)*amount_discount
-        self.amount_without_discount = amount_untaxed + amount_discount
+        self.amount_discount_negative = (-1)*self.amount_discount
+        self.amount_without_discount = self.amount_untaxed + self.amount_discount
 
     @api.onchange('discount_type', 'discount_rate', 'invoice_line_ids')
     def supply_rate(self):
