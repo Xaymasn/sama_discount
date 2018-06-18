@@ -11,7 +11,7 @@
                     <field name="amount_discount_negative" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                 </xpath>
                 <xpath expr="//field[@name='comment']" position="before">
-                    <group name="discount" colspan="2">
+                    <group name="discount" col="4">
                         <field name="discount_type"/>
                         <field name="discount_rate"/>
                     </group>
